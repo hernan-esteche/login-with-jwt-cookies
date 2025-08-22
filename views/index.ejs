@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EJS Auth</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <% if (typeof username !== 'undefined') { %>
+      <div>
+        <h1>Bienvenido <%= username %></h1>
+        <p>Estas en el panel de Administracion</p>
+        <button type="button" id="close-session">Logout</button>
+      </div>
+      <% } %> <% if (typeof username === 'undefined') { %>
+      <section>
+        <h2>Registro</h2>
+        <form id="registerForm">
+          <input type="text" name="username" placeholder="Usuario" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            required
+          />
+          <button type="submit">Registrarse</button>
+        </form>
+        <div id="registerMessage" class="message"></div>
+      </section>
+
+      <section>
+        <h2>Login</h2>
+        <form id="loginForm">
+          <input type="text" name="username" placeholder="Usuario" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            required
+          />
+          <button type="submit">Ingresar</button>
+        </form>
+        <div id="loginMessage" class="message"></div>
+      </section>
+      <% } %>
+    </div>
+
+    <script>
+      // Handle Register
+      document
+        .getElementById("registerForm")
+        ?.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(e.target);
+          const data = Object.fromEntries(formData.entries());
+
+          try {
+            const res = await fetch("/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            const result = await res.json();
+            document.getElementById("registerMessage").innerText = res.ok
+              ? "✅ Usuario registrado con ID: " + result.id
+              : "❌ Error: " + result.error;
+
+            document.getElementById("registerMessage").className = res.ok
+              ? "message success"
+              : "message error";
+          } catch (err) {
+            console.error(err);
+          }
+        });
+
+      // Handle Login
+      document
+        .getElementById("loginForm")
+        ?.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(e.target);
+          const data = Object.fromEntries(formData.entries());
+
+          try {
+            const res = await fetch("/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            const result = await res.json();
+            document.getElementById("loginMessage").innerText = res.ok
+              ? "✅ Login exitoso, bienvenido " + result.username
+              : "❌ Error: " + result.error;
+
+            document.getElementById("loginMessage").className = res.ok
+              ? "message success"
+              : "message error";
+
+            if (res.ok) {
+              setTimeout(() => (window.location.href = "/protected"), 1000);
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        });
+
+      document
+        .getElementById("close-session")
+        ?.addEventListener("click", async (e) => {
+          e.preventDefault();
+          try {
+            const res = await fetch("/logout", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+            });
+
+            if (res.ok) {
+              window.location.href = "/";
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+[
+	{
+		"_id": "08a346de-88f2-4e56-9636-dbc227c7e4c3",
+		"username": "MARIAdb",
+		"password": "$2b$10$F0PEJoVjbOWrwYdfYW9YZ.kpzEh.2.cjKiFHyKIJBwVbu8PbO3cxm"
+	},
+	{
+		"_id": "a9f1afb4-1991-4185-babc-90e6d8210891",
+		"username": "MARIA",
+		"password": "$2b$10$CAmnJT91K0M.wTgvba9Iqe.nNMzlxj0L7u93RuH2xPuebokSGHdq."
+	},
+	{
+		"_id": "5edc8bcd-9e95-4d7e-b4d5-9a9feab83274",
+		"username": "testuser",
+		"password": "$2b$10$nFasJ.GJxMXTjZ6wG0ysW.F991Jx1tDmqXVTnNLEPgXxtfGQvvE3u"
+	},
+	{
+		"_id": "d41f5804-742e-4e19-8217-f68bc855dc38",
+		"username": "john",
+		"password": "$2b$10$O5YCou/7096XhZUvxf3Tpet6rT8m5aeh1OyouNt4O6b4XdigXuilS"
+	},
+	{
+		"_id": "d00d74a5-f105-4dab-b657-2191c8965407",
+		"username": "hernan",
+		"password": "12345678"
+	}
+]
